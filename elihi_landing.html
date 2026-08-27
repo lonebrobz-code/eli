@@ -4,6 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>엘리하이 초등교육 | 10일 무료체험</title>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2113774992702700');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2113774992702700&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
 <style>
   @font-face {
     font-family: 'Pretendard';
@@ -413,9 +432,72 @@
     color: #8FA2B3;
     background: var(--navy-deep);
   }
+
+  /* ---------- 완료 팝업 ---------- */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(8,33,58,0.6);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .modal-overlay.active {
+    display: flex;
+  }
+  .modal-box {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 36px 28px 28px;
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+    box-shadow: 0 24px 48px rgba(0,0,0,0.3);
+    animation: modal-pop 0.25s ease;
+  }
+  @keyframes modal-pop {
+    from { opacity: 0; transform: translateY(12px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .modal-icon {
+    width: 56px; height: 56px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue-bright), var(--mint));
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-icon svg { width: 26px; height: 26px; }
+  .modal-box h3 {
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .modal-box p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+  }
+  .modal-close {
+    width: 100%;
+    background: linear-gradient(90deg, var(--blue-bright), var(--mint));
+    color: var(--white);
+    font-size: 15px;
+    font-weight: 700;
+    padding: 14px 0;
+    border: none;
+    border-radius: 11px;
+    cursor: pointer;
+  }
 </style>
 </head>
 <body>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2113774992702700&ev=PageView&noscript=1"
+/></noscript>
 
   <!-- 1. 헤더 후크 -->
   <section class="hero">
@@ -560,10 +642,37 @@
           consent.focus();
           return false;
         }
+
+        // Meta Pixel Lead 이벤트
+        if (typeof fbq === 'function') {
+          fbq('track', 'Lead');
+        }
+
+        // 완료 팝업 표시
+        document.getElementById('completeModal').classList.add('active');
+
         return true;
+      }
+
+      function closeModal() {
+        document.getElementById('completeModal').classList.remove('active');
       }
     </script>
   </section>
+
+  <!-- 완료 팝업 -->
+  <div class="modal-overlay" id="completeModal">
+    <div class="modal-box">
+      <div class="modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 13L9.5 17.5L19 7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3>신청이 완료되었습니다</h3>
+      <p>곧 연락드리겠습니다</p>
+      <button class="modal-close" onclick="closeModal()">확인</button>
+    </div>
+  </div>
 
   <footer>
     ⓒ 엘리하이 초등교육. 본 페이지의 모든 콘텐츠는 무단 복제 및 캡처를 금합니다.
